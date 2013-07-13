@@ -22,9 +22,9 @@ def register():
     print "Game ID:", request.get('game_id')
     print "Client ID:", request.get('client_id')
     print "Board:"
-    print "  Width:", request.get('width')
-    print "  Height:", request.get('height')
-    print "  Num Players:", request.get('num_players')
+    print "  Width:", request.get('board').get('width')
+    print "  Height:", request.get('board').get('height')
+    print "  Num Players:", request.get('board').get('num_players')
     print "----------------"
 
     return _respond({
