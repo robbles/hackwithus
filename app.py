@@ -20,7 +20,7 @@ def register():
 
     print "--- REGISTER ---"
     print "Game ID:", request.get('game_id')
-    print "Snake ID:", request.get('snake_id')
+    print "Client ID:", request.get('client_id')
     print "Board:"
     print "  Width:", request.get('width')
     print "  Height:", request.get('height')
@@ -46,22 +46,21 @@ def start():
     return _respond({})
 
 
-@bottle.post('/tick')
-def tick():
+@bottle.post('/tick/<client_id>')
+def tick(client_id):
     request = bottle.request.json
     if not request:
         return "No request data sent"
 
     print "--- TICK", request.get('turn_num'), '---'
     print "Game ID:", request.get('game_id')
-    print "Snake ID:", request.get('snake_id')
     print "Turn Num:", request.get('turn_num')
     print "Snakes:", len(request.get('snakes'))
     print "----------------"
 
     # Find the last move we made
     for snake in request.get('snakes'):
-        if snake['id'] == request.get('snake_id'):
+        if snake['id'] == client_id:
             my_snake = snake
 
     # Map
