@@ -12,7 +12,7 @@ def _respond(response_json):
     return json.dumps(response_json)
 
 
-@bottle.route('/register')
+@bottle.post('/register')
 def register():
     request = bottle.request.json
     if not request:
@@ -33,7 +33,7 @@ def register():
     })
 
 
-@bottle.route('/start')
+@bottle.post('/start')
 def start():
     request = bottle.request.json
     if not request:
@@ -46,7 +46,7 @@ def start():
     return _respond({})
 
 
-@bottle.route('/tick')
+@bottle.post('/tick')
 def tick():
     request = bottle.request.json
     if not request:
@@ -79,7 +79,7 @@ def tick():
     })
 
 
-@bottle.route('/end')
+@bottle.post('/end')
 def end():
     request = bottle.request.json
     if not request:
