@@ -58,6 +58,9 @@ def tick(client_id):
     print "Snakes:", len(request.get('snakes'))
     print "----------------"
 
+    # Default move
+    my_move = 'n'
+
     # Find the last move we made
     for snake in request.get('snakes'):
         if snake['id'] == client_id:
@@ -70,7 +73,8 @@ def tick(client_id):
         'e': ['e', 'n', 's'],
         'w': ['w', 'n', 's']
     }
-    my_move = random.choice(allowed_moves[my_snake['last_move']])
+    if my_snake['last_move'] in allowed_moves:
+        my_move = random.choice(allowed_moves[my_snake['last_move']])
 
     return _respond({
         'move': my_move,
