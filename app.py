@@ -13,10 +13,10 @@ def index():
 
 # Runserver
 
-is_production = os.environ.get('POST', None)
+prod_port = os.environ.get('PORT', None)
 
-if is_production:
-    bottle.run(server='gevent', port=os.environ.get('PORT', 5000))
+if prod_port:
+    bottle.run(server='gevent', port=prod_port)
 else:
     bottle.debug(True)
     bottle.run(host='localhost', port=8080)
