@@ -64,16 +64,8 @@ def tick(client_id):
             my_snake = snake
 
     # Map
-    allowed_moves = {
-        'n': ['n', 'e', 'w'],
-        's': ['s', 'e', 'w'],
-        'e': ['e', 'n', 's'],
-        'w': ['w', 'n', 's']
-    }
-
-    my_move = 'n'  # First move
-    if my_snake['last_move'] in allowed_moves:
-        my_move = random.choice(allowed_moves[my_snake['last_move']])
+    moves = ['n', 'n', 'w', 'w', 's', 's', 'e', 'e']
+    my_move = moves[request.get('turn_num') % len(moves)]
 
     return _respond({
         'move': my_move,
