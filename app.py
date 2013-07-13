@@ -16,7 +16,8 @@ def index():
 prod_port = os.environ.get('PORT', None)
 
 if prod_port:
-    bottle.run(server='gevent', port=prod_port)
+    # Heroku
+    bottle.run(host='0.0.0.0', port=int(prod_port), server='gevent')
 else:
     bottle.debug(True)
     bottle.run(host='localhost', port=8080)
