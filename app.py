@@ -53,7 +53,7 @@ def tick(client_id):
         return "No request data sent"
 
     print "--- TICK", request.get('turn_num'), '---'
-    print "Game ID:", request.get('game_id')
+    print "Game ID:", request.get('id')
     print "Turn Num:", request.get('turn_num')
     print "Snakes:", len(request.get('snakes'))
     print "----------------"
