@@ -18,7 +18,7 @@ def register(ai_mode):
     if not request:
         return "No request data sent"
 
-    print "--- REGISTER ---"
+    print "--- REGISTER ---", str(ai_mode)
     print "Game ID:", request.get('game_id')
     print "Client ID:", request.get('client_id')
     print "Board:"
@@ -38,7 +38,7 @@ def start(ai_mode):
     if not request:
         return "No request data sent"
 
-    print "--- START ---"
+    print "--- START ---", str(ai_mode)
     print "Game ID:", request.get('game_id')
     print "Num Players:", request.get('num_players')
     print "-------------"
@@ -52,7 +52,7 @@ def tick(ai_mode, client_id):
     if not request:
         return "No request data sent"
 
-    print "--- TICK", request.get('turn_num'), '---'
+    print "--- TICK", request.get('turn_num'), '---', str(ai_mode)
     print "Game ID:", request.get('id')
     print "Turn Num:", request.get('turn_num')
     print "Snakes:", len(request.get('snakes'))
@@ -96,7 +96,7 @@ def end():
     if not request:
         return "No request data sent"
 
-    print "--- END ---"
+    print "--- END ---", str(ai_mode)
     print "Game ID:", request.get('game_id')
     print "-------------"
 
