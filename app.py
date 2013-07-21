@@ -12,8 +12,16 @@ def _respond(response_json):
     return json.dumps(response_json)
 
 
+def map_ai(ai_mode):
+    if ai_mode not in ['sq', 'n', 's', 'e', 'w']:
+        return 'r'
+    return ai_mode
+
+
 @bottle.post('/<ai_mode>/register')
 def register(ai_mode):
+    ai_mode = map_ai(ai_mode)
+
     request = bottle.request.json
     if not request:
         return "No request data sent"
@@ -27,7 +35,7 @@ def register(ai_mode):
     print "----------------"
 
     ai_names = {
-        'square': 'Square Snake',
+        'sq': 'Square Snake',
         'n': 'North Snake',
         's': 'South Snake',
         'e': 'East Snake',
@@ -43,6 +51,8 @@ def register(ai_mode):
 
 @bottle.post('/<ai_mode>/start')
 def start(ai_mode):
+    ai_mode = map_ai(ai_mode)
+
     request = bottle.request.json
     if not request:
         return "No request data sent"
@@ -57,6 +67,8 @@ def start(ai_mode):
 
 @bottle.post('/<ai_mode>/tick/<client_id>')
 def tick(ai_mode, client_id):
+    ai_mode = map_ai(ai_mode)
+
     request = bottle.request.json
     if not request:
         return "No request data sent"
@@ -86,7 +98,7 @@ def tick(ai_mode, client_id):
     r_choices = random_map[my_snake['last_move']]
 
     modes = {
-        'square': ['n', 'n', 'w', 'w', 's', 's', 'e', 'e'],
+        'sq': ['n', 'n', 'w', 'w', 's', 's', 'e', 'e'],
         'n': ['n'],
         's': ['n'],
         'e': ['e'],
@@ -105,7 +117,9 @@ def tick(ai_mode, client_id):
 
 
 @bottle.post('<ai_mode>/end')
-def end():
+def end(ai_mode):
+    ai_mode = map_ai(ai_mode)
+
     request = bottle.request.json
     if not request:
         return "No request data sent"
