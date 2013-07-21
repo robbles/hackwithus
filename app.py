@@ -26,8 +26,17 @@ def register(ai_mode):
     print "  Height:", request.get('board').get('height')
     print "----------------"
 
+    ai_names = {
+        'square': 'Square Snake',
+        'n': 'North Snake',
+        's': 'South Snake',
+        'e': 'East Snake',
+        'w': 'West Snake',
+        'r': 'RaNd0m Sn4K3'
+    }
+
     return _respond({
-        'name': 'Example Snake',
+        'name': ai_names[ai_mode],
         'img_url': "https://secure.gravatar.com/avatar/a4c3a996a2b224de62d5c2aae1f2760b?s=50"
     })
 
