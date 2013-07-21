@@ -63,6 +63,8 @@ def tick(ai_mode, client_id):
     for snake in request.get('snakes'):
         if snake['id'] == client_id:
             my_snake = snake
+            if 'last_move' not in my_snake:
+                my_snake['last_move'] = 'e'
 
     random_map = {
         'n': ['n', 'w', 'e'],
