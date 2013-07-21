@@ -66,15 +66,13 @@ def tick(ai_mode, client_id):
         if snake['id'] == client_id:
             my_snake = snake
             continue
-    if 'last_move' not in my_snake:
-        my_snake['last_move'] = 'e'
-    print my_snake
 
     random_map = {
-        'n': ['n', 'w', 'e'],
-        's': ['s', 'w', 'e'],
-        'w': ['n', 'w', 's'],
-        'e': ['n', 's', 'e']
+        'n': [random.choice(['n', 'e', 'w'])],
+        's': [random.choice(['s', 'e', 'w'])],
+        'w': [random.choice(['n', 's', 'w'])],
+        'e': [random.choice(['n', 's', 'e'])],
+        '': [random.choice(['n', 's', 'e', 'w'])]
     }
     r_choices = random_map[my_snake['last_move']]
 
@@ -83,9 +81,9 @@ def tick(ai_mode, client_id):
         'n': ['n'],
         's': ['n'],
         'e': ['e'],
-        'w': ['w']
+        'w': ['w'],
+        'r': r_choices
     }
-    modes['r'] = r_choices
 
     # Map
     moves = modes[ai_mode]
