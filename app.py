@@ -72,18 +72,19 @@ def tick(ai_mode, client_id):
         'w': ['n', 'w', 's'],
         'e': ['n', 's', 'e']
     }
+    r_choices = random_map[my_snake['last_move']]
 
     modes = {
         'square': ['n', 'n', 'w', 'w', 's', 's', 'e', 'e'],
         'n': ['n'],
         's': ['n'],
         'e': ['e'],
-        'w': ['w'],
-
-        'r': [random.choice(random_map[my_snake['last_move']])]
+        'w': ['w']
     }
+    modes['r'] = r_choices
+
     # Map
-    moves = modes[ai_mode][:]
+    moves = modes[ai_mode]
     my_move = moves[request.get('turn_num') % len(moves)]
 
     return _respond({
