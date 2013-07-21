@@ -68,6 +68,7 @@ def tick(ai_mode, client_id):
             continue
     if 'last_move' not in my_snake:
         my_snake['last_move'] = 'e'
+    print my_snake
 
     random_map = {
         'n': ['n', 'w', 'e'],
