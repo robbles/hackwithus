@@ -58,6 +58,8 @@ def tick(ai_mode, client_id):
     print "Snakes:", len(request.get('snakes'))
     # print request.get('board')
     print "----------------"
+    print client_id
+    print request.get('snakes')
 
     # Find the last move we made
     for snake in request.get('snakes'):
