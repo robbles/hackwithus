@@ -1,12 +1,7 @@
-# Required to make bottle work with gevent
-import gevent.monkey
-gevent.monkey.patch_all()
-
 import bottle
 import json
 import os
 import random
-
 
 def _respond(response_json):
     return json.dumps(response_json)
@@ -45,7 +40,7 @@ def register(ai_mode):
 
     return _respond({
         'name': ai_names[ai_mode],
-        'head_img_url': "http://fc02.deviantart.net/fs70/f/2010/148/3/d/20x20_PNG_Icons_sword_by_JMcIvor.png"
+        'img_url': "https://secure.gravatar.com/avatar/a4c3a996a2b224de62d5c2aae1f2760b?s=50"
     })
 
 
@@ -131,14 +126,3 @@ def end(ai_mode):
     return _respond({})
 
 
-## Runserver ##
-
-prod_port = os.environ.get('PORT', None)
-
-if prod_port:
-    # Assume Heroku
-    bottle.run(host='0.0.0.0', port=int(prod_port), server='gevent')
-else:
-    # Localhost
-    bottle.debug(True)
-    bottle.run(host='localhost', port=8080)
