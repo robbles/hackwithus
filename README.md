@@ -1,4 +1,6 @@
-hackwithus
-==========
+snakewithus-python
+=============
 
-Team repository for hackwithus AI competition
+Basic snakewithus AI using Python, Bottle, and Heroku.
+
+http://example-snake.herokuapp.com
