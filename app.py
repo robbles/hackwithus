@@ -29,10 +29,17 @@ def register(ai_name):
     print "  Height:", request.get('board').get('height')
     print "----------------"
 
+    print bottle.request.url
+    print bottle.request.urlparts
+
+    url = bottle.request.urlparts
+    img_url = url.scheme + '://' + url.netloc + '/images/pacman.jpg'
+    print img_url
+
     return _respond({
         'name': strategy.label,
-        'img_url': "https://secure.gravatar.com/avatar/a4c3a996a2b224de62d5c2aae1f2760b?s=50",
-        'head_img_url': "https://secure.gravatar.com/avatar/a4c3a996a2b224de62d5c2aae1f2760b?s=50",
+        'img_url': img_url,
+        'head_img_url': img_url,
     })
 
 
