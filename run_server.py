@@ -13,4 +13,4 @@ if prod_port:
 else:
     # Localhost
     bottle.debug(True)
-    bottle.run(host='', port=8080)
+    bottle.run(host='', port=8080, reloader=True)
