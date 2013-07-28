@@ -8,6 +8,10 @@ import ai
 def _respond(response_json):
     return json.dumps(response_json)
 
+@bottle.get('/images/<filename>')
+def send_image(filename):
+    return bottle.static_file(filename, root='static/img', mimetype='image/jpg')
+
 
 @bottle.post('/<ai_name>/register')
 def register(ai_name):
@@ -27,7 +31,8 @@ def register(ai_name):
 
     return _respond({
         'name': strategy.label,
-        'img_url': "https://secure.gravatar.com/avatar/a4c3a996a2b224de62d5c2aae1f2760b?s=50"
+        'img_url': "https://secure.gravatar.com/avatar/a4c3a996a2b224de62d5c2aae1f2760b?s=50",
+        'head_img_url': "https://secure.gravatar.com/avatar/a4c3a996a2b224de62d5c2aae1f2760b?s=50",
     })
 
 
@@ -77,6 +82,8 @@ def tick(ai_name, client_id):
         return 'No snake for client ID', client_id
 
     move = strategy.tick(game_id, client_id, turn_num, board, snakes, my_snake)
+
+    print "Moving in direction:", move
 
     return _respond({
         'move': move,
