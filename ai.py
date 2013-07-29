@@ -1,6 +1,8 @@
 import random
 
-DEFAULT_STRATEGY = 'avoidance'
+import ai_helper
+
+DEFAULT_STRATEGY = 'pacman'
 
 NORTH = 'n'
 SOUTH = 's'
@@ -43,9 +45,9 @@ class Strategy(object):
         }
 
 
-@register_ai('north')
+@register_ai('east')
 class Simple(Strategy):
-    label = 'Default Strategy'
+    label = 'east'
 
     def tick(self, game_id, client_id, turn_num, board, snakes, our_snake):
         return NORTH
@@ -53,7 +55,7 @@ class Simple(Strategy):
 
 @register_ai('random')
 class Random(Strategy):
-    label = 'Random Strategy'
+    label = 'random'
 
     def tick(self, game_id, client_id, turn_num, board, snakes, my_snake):
         random_map = {
@@ -68,7 +70,7 @@ class Random(Strategy):
 
 @register_ai('avoidance')
 class Avoidance(Strategy):
-    label = 'Avoidance Strategy'
+    label = 'avoidance'
 
     def safe_move(self, square):
         if square is Wall:
@@ -119,7 +121,7 @@ class Avoidance(Strategy):
 
 @register_ai('hide')
 class HideAndSeek(Avoidance):
-    label = 'Run and hide from everything, even food'
+    label = 'hideandseek'
 
     def choose_direction(self, available, surroundings, current_direction, board, position):
         no_food = [d for d in available if not surroundings[d]]
@@ -129,6 +131,29 @@ class HideAndSeek(Avoidance):
 
         return random.choice(available)
 
+
+@register_ai('pacman')
+class Pacman(Avoidance):
+    label = 'pacman'
+
+    def choose_direction(self, available, surroundings, current_direction, board, position):
+        posx, posy = position
+
+        helper = ai_helper.SnakeAIs(board, [])
+
+        direction, closest_food = helper.getClosestFood(position)
+
+        if direction and direction in available:
+            food_surroundings = self.safe_directions(board, closest_food[0], closest_food[1])
+            if len(food_surroundings) == 4:
+                return direction
+
+        if current_direction in available:
+            return current_direction
+
+        return random.choice(available)
+
+    
 
 
 ai_strategies['default'] = ai_strategies[DEFAULT_STRATEGY]
