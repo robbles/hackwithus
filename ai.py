@@ -21,6 +21,7 @@ def register_ai(name):
     return _register
 
 def get_ai(name):
+    name = name.split('.')[0]
     return ai_strategies.get(name, ai_strategies['random'])
 
 
