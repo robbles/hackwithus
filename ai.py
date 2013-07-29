@@ -145,6 +145,10 @@ class Pacman(Avoidance):
         direction, closest_food = helper.getClosestFood(position)
 
         if direction and direction in available:
+            # Get food if we're right next to it
+            if adjacent(position, closest_food):
+                return direction
+
             food_surroundings = self.safe_directions(board, closest_food[0], closest_food[1])
             if len(food_surroundings) == 4:
                 return direction
@@ -154,6 +158,9 @@ class Pacman(Avoidance):
 
         return random.choice(available)
 
+
+def adjacent(self, a, b):
+    return abs(a[0] - b[0]) + abs(a[1] - b[1]) == 1
     
 
 
