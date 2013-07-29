@@ -103,6 +103,20 @@ class SnakeAIs:
         if self.DEBUG:
             print "closest food:"
             print closest_food
+        possible_directions = []
+        #compare x's
+        if closest_food[0] > pos[0]:
+            possible_directions.append("e")
+        elif closest_food[0] < pos[0]:
+            possible_directions.append("w")
+        #compare y's
+        if closest_food[1] > pos[1]:
+            possible_directions.append("n")
+        elif closest_food[1] < pos[1]:
+            possible_directions.append("s")
+        print possible_directions
+        direction = choice(possible_directions)
+        print direction
 
 def main():
     #board setting
@@ -121,12 +135,12 @@ def main():
                   []
                ],     
                [
+                  [],
                   [{
                   "type": "snake",
                   "id": "e287ad13-b8e2-4b4e-bc1f-57ce613da2ee"
                   }
                   ],
-                  [],
                   [],
                   []
                 ],
