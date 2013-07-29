@@ -22,7 +22,7 @@ def register_ai(name):
 
 def get_ai(name):
     name = name.split('.')[0]
-    return ai_strategies.get(name, ai_strategies['random'])
+    return ai_strategies.get(name, ai_strategies['pacman'])
 
 
 class Strategy(object):
@@ -114,28 +114,36 @@ class Avoidance(Strategy):
 
         if not available:
             # We're screwed, just go north
-            return NORTH, 'NOOOOOOO!'
+            return NORTH
 
         position = (posx, posy)
         return self.choose_direction(available, surroundings, last_move, board, position)
 
 
-@register_ai('hide')
-class HideAndSeek(Avoidance):
-    label = 'hideandseek'
+@register_ai('pacman')
+class FoodAvoidance(Avoidance):
+    label = 'avoid-food'
 
     def choose_direction(self, available, surroundings, current_direction, board, position):
-        no_food = [d for d in available if not surroundings[d]]
-        
-        if current_direction in no_food:
+        available_set = set(available)
+
+        for direction in available:
+            square = surroundings[direction]
+
+            # Avoid food
+            if square and square[0].get('type') == 'food':
+                print 'avoiding food at', direction, square
+                available_set.remove(direction)
+
+        if current_direction in available_set:
             return current_direction
 
-        return random.choice(available)
+        return random.choice(list(available_set))
 
 
-@register_ai('pacman')
+@register_ai('pacman_old')
 class Pacman(Avoidance):
-    label = 'pacman'
+    label = 'pacman_old'
 
     def choose_direction(self, available, surroundings, current_direction, board, position):
         posx, posy = position
