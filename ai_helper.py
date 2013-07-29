@@ -116,8 +116,10 @@ class SnakeAIs:
             possible_directions.append("s")
         print possible_directions
         direction = choice(possible_directions)
-        print direction
-
+        if self.DEBUG:
+            print possible_directions
+            print direction
+        return direction
 def main():
     #board setting
     board = [ [
