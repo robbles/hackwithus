@@ -159,7 +159,7 @@ class Pacman(Avoidance):
         return random.choice(available)
 
 
-def adjacent(self, a, b):
+def adjacent(a, b):
     return abs(a[0] - b[0]) + abs(a[1] - b[1]) == 1
     
 
