@@ -82,6 +82,22 @@ class Avoidance(Strategy):
 
         return False
 
+    def safe_directions(self, board, posx, posy):
+        surroundings = self.get_surroundings(board, posx, posy)
+        directions = (NORTH, SOUTH, EAST, WEST)
+
+        return [
+            direction for direction in directions
+            if self.safe_move(surroundings[direction])
+        ]
+
+    def choose_direction(self, available, surroundings, current_direction, board, position):
+        """ Choose which direction to go out of the non-blocked directions """
+        if current_direction in available:
+            return current_direction
+
+        return random.choice(available)
+
     def tick(self, game_id, client_id, turn_num, board, snakes, my_snake):
         last_move = my_snake['last_move']
         if not last_move:
@@ -91,25 +107,25 @@ class Avoidance(Strategy):
 
         surroundings = self.get_surroundings(board, posx, posy)
 
-        # Go in same direction if nothing blocking
-        if self.safe_move(surroundings[last_move]):
-            return last_move
+        available = self.safe_directions(board, posx, posy)
 
-        # Can't go in same direction or in reverse, pick one of other two
-        directions = {
-            NORTH: [EAST, WEST],
-            SOUTH: [EAST, WEST],
-            WEST: [NORTH, SOUTH],
-            EAST: [NORTH, SOUTH],
-        }
-
-        available = [direction for direction in directions[last_move] if self.safe_move(surroundings[direction])]
-        print 'Available directions:'
-        print available
-        
         if not available:
             # We're screwed, just go north
             return NORTH
+
+        position = (posx, posy)
+        return self.choose_direction(available, surroundings, last_move, board, position)
+
+
+@register_ai('hide')
+class HideAndSeek(Avoidance):
+    label = 'Run and hide from everything, even food'
+
+    def choose_direction(self, available, surroundings, current_direction, board, position):
+        no_food = [d for d in available if not surroundings[d]]
+        
+        if current_direction in no_food:
+            return current_direction
 
         return random.choice(available)
 
