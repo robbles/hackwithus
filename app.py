@@ -88,13 +88,19 @@ def tick(ai_name, client_id):
         print 'ERROR: could not found our snake in request!'
         return 'No snake for client ID', client_id
 
-    move = strategy.tick(game_id, client_id, turn_num, board, snakes, my_snake)
+    response = strategy.tick(game_id, client_id, turn_num, board, snakes, my_snake)
+
+    if isinstance(response, (list, tuple)):
+        move, msg = response
+    else:
+        move = response
+        msg = ''
 
     print "Moving in direction:", move
 
     return _respond({
         'move': move,
-        'message': 'Turn %d!' % turn_num
+        'message': msg
     })
 
 

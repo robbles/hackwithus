@@ -114,7 +114,7 @@ class Avoidance(Strategy):
 
         if not available:
             # We're screwed, just go north
-            return NORTH
+            return NORTH, 'NOOOOOOO!'
 
         position = (posx, posy)
         return self.choose_direction(available, surroundings, last_move, board, position)
@@ -147,7 +147,7 @@ class Pacman(Avoidance):
         if direction and direction in available:
             # Get food if we're right next to it
             if adjacent(position, closest_food):
-                return direction
+                return direction, 'mmm, food.'
 
             food_surroundings = self.safe_directions(board, closest_food[0], closest_food[1])
             if len(food_surroundings) == 4:
