@@ -22,7 +22,7 @@ def register_ai(name):
 
 def get_ai(name):
     name = name.split('.')[0]
-    return ai_strategies.get(name, ai_strategies['pacman'])
+    return ai_strategies.get(name, ai_strategies[DEFAULT_STRATEGY])
 
 
 class Strategy(object):
@@ -120,7 +120,7 @@ class Avoidance(Strategy):
         return self.choose_direction(available, surroundings, last_move, board, position)
 
 
-@register_ai('pacman')
+@register_ai('avoid-food')
 class FoodAvoidance(Avoidance):
     label = 'avoid-food'
 
@@ -141,9 +141,9 @@ class FoodAvoidance(Avoidance):
         return random.choice(list(available_set))
 
 
-@register_ai('pacman_old')
+@register_ai('pacman')
 class Pacman(Avoidance):
-    label = 'pacman_old'
+    label = 'pacman'
 
     def choose_direction(self, available, surroundings, current_direction, board, position):
         posx, posy = position
